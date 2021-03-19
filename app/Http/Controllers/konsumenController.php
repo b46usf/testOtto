@@ -47,4 +47,10 @@ class konsumenController extends Controller
             return false; 
         }
     }
+    public function store(Request $request) {
+    //
+    }
+    public function update(Request $request) {
+    //
+    }
 }

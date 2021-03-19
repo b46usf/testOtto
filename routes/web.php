@@ -28,7 +28,7 @@ Route::get('/', function () {
 Route::get('/customer', 'App\Http\Controllers\konsumenController@index');
 Route::get('/customer/input', 'App\Http\Controllers\konsumenController@create');
 Route::get('/customer/show', 'App\Http\Controllers\konsumenController@show');
-Route::post('/customer/edit', 'App\Http\Controllers\customerController@edit');
-Route::post('/customer/update', 'App\Http\Controllers\customerController@update');
-Route::post('/customer/delete', 'App\Http\Controllers\customerController@delete');
-Route::post('/customer/store', 'App\Http\Controllers\customerController@store');
+Route::post('/customer/edit', 'App\Http\Controllers\konsumenController@edit');
+Route::post('/customer/update', 'App\Http\Controllers\konsumenController@update');
+Route::post('/customer/delete', 'App\Http\Controllers\konsumenController@delete');
+Route::post('/customer/store', 'App\Http\Controllers\konsumenController@store');
