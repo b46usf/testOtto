@@ -89,6 +89,36 @@ class konsumenController extends Controller
         echo json_encode($response);
     }
     public function update(Request $request) {
-    //
+        $dataCustomer   = [
+            'email_customer'    => $request->inputEmail,
+            'nama_customer'     => $request->inputName,
+            'bod_customer'      => $request->inputBOD,
+            'phone_customer'    => $request->inputPhone
+        ];
+
+        $dataAlamat     = [
+            'alamat'        => $request->inputAddress
+        ];
+
+        $dataRekening   = [
+            'nomor_rekening'    => $request->inputRekening,
+            'bank_rekening'     => $request->inputBank
+        ];
+
+        if ($request->file('fileImg')!==NULL) {
+            $namefile   = $request->inputIDCustomer.'.'.$request->file('fileImg')->extension();
+            $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
+            $dataImage      = [
+                'file_location' => 'storage/img',
+                'file_image'    => $namefile
+            ];
+            $updateImage    =   DB::table('customers_image')->where('id_customers',$request->inputIDCustomer)->update($dataImage);
+        }
+
+        $updateCustomer =   DB::table('customer')->where('uniqID_Customer',$request->inputIDCustomer)->update($dataCustomer);
+        $updateAlamat   =   DB::table('alamat')->where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
+        $updateRekening =   DB::table('rekening')->where('id_customers',$request->inputIDCustomer)->update($dataRekening);
+        $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
+        echo json_encode($response);
     }
 }
