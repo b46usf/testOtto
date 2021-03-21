@@ -34,7 +34,7 @@
       <td>{{ $k->bank_rekening }}</td>
 			<td>
 				<a href="#" data-type="editCustomer" data-action="/customer/show" data-id="{{ $k->uniqID_Customer }}">Edit</a> ||
-				<a href="#" data-type="deleteCustomer" data-action="/customer/delete" data-id="{{ $k->uniqID_Customer }}">Hapus</a>
+				<a href="#" data-type="deleteCustomer" data-action="/customer/delete" data-id="{{ $k->uniqID_Customer }}">Delete</a>
 			</td>
     </tr>
 		@endforeach

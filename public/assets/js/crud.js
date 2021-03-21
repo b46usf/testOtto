@@ -86,6 +86,10 @@ $(document).on("click", ".btn-delete", function (event) {
     var dataParam   =   $(this).data('id');
     var url         =   '/customer/delete';
     var action      =   url;
+    deldata(dataParam,action);
+});
+
+function deldata(dataParam,action) {
     if (confirm("Data Akan Dihapus")) {
         $.ajax({
             headers     : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -100,7 +104,7 @@ $(document).on("click", ".btn-delete", function (event) {
             }
         });
     }
-});
+}
 
 function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
@@ -181,8 +185,7 @@ $( document ).ready(function() {
         //viewTables(table);
     }
     if (idPage===false || idPage=='false') { return false;} 
-    else 
-    {
+    else {
         load_edit(idPage,pageAction);
     }
 });
@@ -192,6 +195,11 @@ $('a').click(function(event){
     if ($(this).text()=='Edit') {
         if ($(this).data('type')=='editCustomer') {
             location.href    =   $(this).data('action')+'?action='+$(this).data('type')+'&id='+$(this).data('id');
+        }
+    }
+    if ($(this).text()=='Delete') {
+        if ($(this).data('type')=='deleteCustomer') {
+            deldata($(this).data('id'),$(this).data('action'));
         }
     }
     if ($(this).text()=='Back' || $(this).text()=='Add') {

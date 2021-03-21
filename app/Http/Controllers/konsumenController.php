@@ -121,4 +121,14 @@ class konsumenController extends Controller
         $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
         echo json_encode($response);
     }
+    public function delete(Request $request)
+    {
+        $dataCustomer   = [
+            'status_delete'    => 1
+        ];
+
+        $deleteCustomer =   DB::table('customer')->where('uniqID_Customer',$request->dataID)->update($dataCustomer);
+        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer');
+        echo json_encode($response);        
+    }
 }
