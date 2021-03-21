@@ -1,37 +1,22 @@
-## Welcome to GitHub Pages
+## Welcome to GitHub Pages Belajar Laravel For Basic
 
-You can use the [editor on GitHub](https://github.com/b46usf/belajar_laravel/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+### Langkah Instalasi
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+1. Download file [zip](https://github.com/b46usf/belajar_laravel/archive/refs/heads/master.zip)
+2. Ekstrak file zip di folder download
+3. Download [XAMPP server](https://www.apachefriends.org/download.html) lalu install
+4. Ketik di url browser localhost/phpmyadmin lalu Import file database mini_projek.sql
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Menjalankan Laravel Serve
+
+buka terminal atau command promt lalu ketik
 
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+php artisan serve --host 192.168.1.101 --port 80
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+5. Ketik di url browser sesuai alamat IP address host diatas 192.168.1.101
+6. Kemudian tambahkan alamat /customer setelah alamat IP address di atas
 
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/b46usf/belajar_laravel/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+For more details click [my pages](https://api.whatsapp.com/send/?phone=6285645439575&text=hai%20ka%20mau%20tau%20lebih%20lanjut%20tentang%20laravel&app_absent=0).
