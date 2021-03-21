@@ -16,7 +16,9 @@ buka terminal atau command promt lalu ketik
 php artisan serve --host 192.168.1.101 --port 80
 ```
 
-5. Ketik di url browser sesuai alamat IP address host diatas 192.168.1.101
-6. Kemudian tambahkan alamat /customer setelah alamat IP address di atas
+### Menjalankan Laravel di URL Browser
+
+1. Ketik di url browser sesuai alamat IP address host diatas 192.168.1.101
+2. Kemudian tambahkan alamat /customer setelah alamat IP address di atas
 
 For more details click [my pages](https://api.whatsapp.com/send/?phone=6285645439575&text=hai%20ka%20mau%20tau%20lebih%20lanjut%20tentang%20laravel&app_absent=0).
