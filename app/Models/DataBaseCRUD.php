@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
-//use DataTables;
+use Illuminate\Database\Eloquent\Model;
+
+class DBEloquent extends Model {
+    
+}
 
 class DataBaseCRUD extends DB {
 
