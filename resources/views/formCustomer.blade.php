@@ -13,7 +13,7 @@
   <body>
 <div class="container mt-5">
 @php
-if (count($konsumen) >0 ) {
+if (count($konsumen) > 0 ) {
   foreach($konsumen as $k) {
     $valID      = $k->uniqID_Customer;
     $valmail    = $k->email_customer;
