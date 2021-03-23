@@ -194,7 +194,8 @@ $('a').click(function(event){
     event.preventDefault();
     if ($(this).text()=='Edit') {
         if ($(this).data('type')=='editCustomer') {
-            location.href    =   $(this).data('action')+'?action='+$(this).data('type')+'&id='+$(this).data('id');
+            //location.href    =   $(this).data('action')+'?action='+$(this).data('type')+'&id='+$(this).data('id');
+            location.href    =   $(this).data('action')+'/'+$(this).data('id');
         }
     }
     if ($(this).text()=='Delete') {

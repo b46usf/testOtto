@@ -25,10 +25,23 @@ class konsumenController extends Controller
         }
     }
     public function create() {
-        return view('formCustomer');
+        return view('formCustomer',['konsumen' => array()]);
     }
-    public function show() {
-        return view('formCustomer');
+    public function show($id) {
+        $konsumen = DB::table('customer')
+        ->select(DB::raw('*'))
+        ->join('customers_image', 'customer.uniqID_Customer', '=', 'customers_image.id_customers')
+        ->join('alamat', 'customer.uniqID_Customer', '=', 'alamat.id_customers')
+        ->join('rekening', 'customer.uniqID_Customer', '=', 'rekening.id_customers')
+        ->where('customer.uniqID_Customer', '=', $id);
+        $results    =   $konsumen->get();
+        if($results->count() > 0) { 
+        //mengirim data konsumen ke view input
+            return view('formCustomer',['konsumen' => $results]);
+        } 
+        else { 
+            return false; 
+        }
     }
     public function edit(Request $request){
         // mengambil data konsumen by request id dengan query builder
