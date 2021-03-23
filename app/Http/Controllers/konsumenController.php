@@ -21,7 +21,7 @@ class konsumenController extends Controller
     	    return view('indexCustomer',['konsumen' => $results]);
         } 
         else { 
-            return false; 
+            return view('indexCustomer',['konsumen' => array()]);
         }
     }
     public function create() {

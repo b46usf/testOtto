@@ -24,6 +24,7 @@
         <th scope="col">Action</th>
     </tr></thead>
     <tbody>
+    @if (count($konsumen) > 0 )
     @foreach($konsumen as $k)
 		<tr>
       <td>{{ $k->uniqID_Customer }}</td>
@@ -38,6 +39,9 @@
 			</td>
     </tr>
 		@endforeach
+    @else
+    <tr><td colspan="7" align="center">Data Tidak Ditemukan</td></tr>
+    @endif
     </tbody>
   </table>
 </div>
