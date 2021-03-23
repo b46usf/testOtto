@@ -12,6 +12,7 @@
   </head>
   <body>
 <div class="container mt-5">
+<!--Tanpa Jquery-->
 @php
 if (count($konsumen) > 0 ) {
   foreach($konsumen as $k) {
