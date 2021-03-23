@@ -49,7 +49,9 @@ class konsumenController extends Controller
         }
     }
     public function store(Request $request) {
+        // membuat ID customer
         $uniqID     = 'Cust-'.hash('crc32', $request->inputEmail);
+        // data from input
         $dataCustomer   = [
             'uniqID_Customer'   => $uniqID,
             'email_customer'    => $request->inputEmail,
@@ -66,6 +68,7 @@ class konsumenController extends Controller
             'nomor_rekening'    => $request->inputRekening,
             'bank_rekening'     => $request->inputBank
         ];
+        // mengecek customer yg sudah ada by email
         $check  =   DB::table('customer')->where('email_customer','=',$request->inputEmail);
         if ($check->count() > 0) {
             $response       =   array('status' => 400,'message' => 'Data is store.','success' => 'Error','location' => '/customer');
@@ -80,6 +83,7 @@ class konsumenController extends Controller
                 'file_location'     => 'storage/img',
                 'file_image'        => ($namefile==NULL) ? 'null':$namefile
             ];
+            // query builder insert data
             $insertImage    =   DB::table('customers_image')->insert($dataImage);
             $insertCustomer =   DB::table('customer')->insert($dataCustomer);
             $insertAlamat   =   DB::table('alamat')->insert($dataAlamat);
@@ -89,22 +93,21 @@ class konsumenController extends Controller
         echo json_encode($response);
     }
     public function update(Request $request) {
+        // data from input
         $dataCustomer   = [
             'email_customer'    => $request->inputEmail,
             'nama_customer'     => $request->inputName,
             'bod_customer'      => $request->inputBOD,
             'phone_customer'    => $request->inputPhone
         ];
-
         $dataAlamat     = [
             'alamat'        => $request->inputAddress
         ];
-
         $dataRekening   = [
             'nomor_rekening'    => $request->inputRekening,
             'bank_rekening'     => $request->inputBank
         ];
-
+        // mengecek file img
         if ($request->file('fileImg')!==NULL) {
             $namefile   = $request->inputIDCustomer.'.'.$request->file('fileImg')->extension();
             $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
@@ -114,7 +117,7 @@ class konsumenController extends Controller
             ];
             $updateImage    =   DB::table('customers_image')->where('id_customers',$request->inputIDCustomer)->update($dataImage);
         }
-
+        // query builder update data
         $updateCustomer =   DB::table('customer')->where('uniqID_Customer',$request->inputIDCustomer)->update($dataCustomer);
         $updateAlamat   =   DB::table('alamat')->where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
         $updateRekening =   DB::table('rekening')->where('id_customers',$request->inputIDCustomer)->update($dataRekening);
@@ -123,10 +126,11 @@ class konsumenController extends Controller
     }
     public function delete(Request $request)
     {
+        // data from input
         $dataCustomer   = [
             'status_delete'    => 1
         ];
-
+        // query builder update data
         $deleteCustomer =   DB::table('customer')->where('uniqID_Customer',$request->dataID)->update($dataCustomer);
         $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer');
         echo json_encode($response);        
