@@ -40,7 +40,7 @@ class konsumenController extends Controller
             return view('formCustomer',['konsumen' => $results]);
         } 
         else { 
-            return false; 
+            return view('formCustomer',['konsumen' => array()]);
         }
     }
     public function edit(Request $request){
