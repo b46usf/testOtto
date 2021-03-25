@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use App\Models\eloAdr;
+// use App\Models\eloRek;
+// use App\Models\eloCustImg;
 
 class eloCust extends Model
 {
@@ -11,21 +14,28 @@ class eloCust extends Model
     // table
     protected $table = 'customer';
     // primary key
-    protected $primaryKey = 'id_table_customer ';
+    protected $primaryKey = 'uniqID_Customer';
     // coloumn table
     protected $fillable = 
     [
+        //'uniqID_Customer',
         'nama_customer',
         'bod_customer',
         'phone_customer',
-        'status_delete'
+        'status_delete',
+        //'alamat',
+        //'provinsi'
     ];
-    public function alamatRelation()
+    public function eloAdr()
     {
-        return $this->hasMany(Alamat::class,'id_customers'); 
+        return $this->belongsToMany('App\Models\eloAdr','id_customers'); 
     }
-    public function RekeningRelation()
-    {
-        return $this->hasMany(Rekening::class,'id_customers');
-    }
+    // public function rekeningRelation()
+    // {
+    //     return $this->hasMany(eloRek::class,'uniqID_Customer','id_customers');
+    // }
+    // public function imageRelation()
+    // {
+    //     return $this->hasOne(eloCustImg::class,'uniqID_Customer','id_customers');
+    // }
 }
