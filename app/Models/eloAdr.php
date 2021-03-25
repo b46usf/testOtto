@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class eloAdr extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     // table
     protected $table = 'alamat';
     // primary key
@@ -21,6 +21,6 @@ class eloAdr extends Model
     ];
     public function eloCust()
     {
-        return $this->belongsToMany('App\Models\eloCust','id_customers','uniqID_Customer'); 
+        return $this->belongsTo('App\Models\eloCust','id_customers','uniqID_Customer'); 
     }
 }

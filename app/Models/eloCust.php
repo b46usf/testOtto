@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 // use App\Models\eloAdr;
 // use App\Models\eloRek;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class eloCust extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     // table
     protected $table = 'customer';
     // primary key
@@ -28,7 +28,7 @@ class eloCust extends Model
     ];
     public function eloAdr()
     {
-        return $this->belongsToMany('App\Models\eloAdr','id_customers'); 
+        return $this->hasMany('App\Models\eloAdr','uniqID_Customer','id_customers'); 
     }
     // public function rekeningRelation()
     // {
