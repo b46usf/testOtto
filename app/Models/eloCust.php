@@ -28,14 +28,14 @@ class eloCust extends Model
     ];
     public function eloAdr()
     {
-        return $this->hasOne('App\Models\eloAdr','id_customers'); 
+        return $this->hasMany('App\Models\eloAdr','id_customers','uniqID_Customer'); 
     }
-    // public function rekeningRelation()
-    // {
-    //     return $this->hasMany(eloRek::class,'uniqID_Customer','id_customers');
-    // }
-    // public function imageRelation()
-    // {
-    //     return $this->hasOne(eloCustImg::class,'uniqID_Customer','id_customers');
-    // }
+    public function eloRek()
+    {
+        return $this->hasMany('App\Models\eloRek','id_customers','uniqID_Customer');
+    }
+    public function eloCustImg()
+    {
+        return $this->hasMany('App\Models\eloCustImg','id_customers','uniqID_Customer');
+    }
 }

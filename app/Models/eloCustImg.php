@@ -2,20 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class eloCustImg extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     // table
     protected $table = 'customers_image';
     // primary key
-    protected $primaryKey = 'idtab_image';
+    //protected $primaryKey = 'id_customers';
     // coloumn table
     protected $fillable = 
     [
         'file_location',
         'file_image'
     ];
+    // public function eloCust()
+    // {
+    //     return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');
+    // }
 }
