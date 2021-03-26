@@ -30,8 +30,7 @@ class eloCustController extends Controller
                 }
             }
         }
-        //echo "<pre>";
-        //print_r($object);
+        //dd($dtkonsumen);
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
     	    return view('indexCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
@@ -46,7 +45,6 @@ class eloCustController extends Controller
     public function show($id) {
         // mengambil data konsumen by id dengan eloquent ORM
         $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('uniqID_Customer',$id)->get();
-        //$konsumen   = eloCust::where('uniqID_Customer',$id)->get();
         // mengubah ke array
         $data       = $konsumen->toArray();
         // mengubah ke objek
@@ -80,5 +78,10 @@ class eloCustController extends Controller
         else { 
             return view('formCustomer',['konsumen' => array()]);
         }
+    }
+    public function store(Request $request) {
+        // membuat ID customer
+        $uniqID     = 'Cust-'.hash('crc32', $request->inputEmail);
+        // data from input
     }
 }
