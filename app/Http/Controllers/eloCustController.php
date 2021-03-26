@@ -10,9 +10,9 @@ use DB;
 class eloCustController extends Controller
 {
     public function index() {
-        //DB::enableQueryLog();
+        DB::enableQueryLog();
         // mengambil data konsumen dengan eloquent ORM
-        $konsumen = eloCust::all();//dd(DB::getQueryLog());
+        $konsumen = eloCust::with('eloAdr')->get();//dd(DB::getQueryLog());
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
     	    return view('indexCustomer',['konsumen' => $konsumen]);
