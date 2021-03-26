@@ -28,7 +28,7 @@ class eloCust extends Model
     ];
     public function eloAdr()
     {
-        return $this->hasMany('App\Models\eloAdr','uniqID_Customer','id_customers'); 
+        return $this->hasOne('App\Models\eloAdr','id_customers'); 
     }
     // public function rekeningRelation()
     // {

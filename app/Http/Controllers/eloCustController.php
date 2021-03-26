@@ -10,7 +10,7 @@ use DB;
 class eloCustController extends Controller
 {
     public function index() {
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         // mengambil data konsumen dengan eloquent ORM
         $konsumen = eloCust::all();//dd(DB::getQueryLog());
         if($konsumen->count() > 0) { 

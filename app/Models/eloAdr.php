@@ -21,6 +21,6 @@ class eloAdr extends Model
     ];
     public function eloCust()
     {
-        return $this->belongsTo('App\Models\eloCust','id_customers','uniqID_Customer'); 
+        return $this->belongsTo('App\Models\eloCust','uniqID_Customer'); 
     }
 }
