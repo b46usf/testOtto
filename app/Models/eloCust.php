@@ -14,7 +14,7 @@ class eloCust extends Model
     // table
     protected $table = 'customer';
     // primary key
-    protected $primaryKey = 'uniqID_Customer';
+    //protected $primaryKey = 'uniqID_Customer';
     // coloumn table
     protected $fillable = 
     [

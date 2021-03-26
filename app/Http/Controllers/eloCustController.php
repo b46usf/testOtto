@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Models\eloCust;
-use DB;
 
 class eloCustController extends Controller
 {
     public function index() {
         DB::enableQueryLog();
         // mengambil data konsumen dengan eloquent ORM
-        $konsumen = eloCust::with('eloAdr')->get();//dd(DB::getQueryLog());
+        $konsumen = eloCust::with(['eloAdr' => function ($query) {$query->select('alamat');}])->get();dd(DB::getQueryLog());
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
     	    return view('indexCustomer',['konsumen' => $konsumen]);

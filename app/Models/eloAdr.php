@@ -11,7 +11,7 @@ class eloAdr extends Model
     // table
     protected $table = 'alamat';
     // primary key
-    protected $primaryKey = 'id_customers';
+    //protected $primaryKey = 'id_customers';
     // coloumn table
     protected $fillable = 
     [
@@ -21,6 +21,6 @@ class eloAdr extends Model
     ];
     public function eloCust()
     {
-        return $this->belongsTo('App\Models\eloCust','uniqID_Customer'); 
+        return $this->belongsTo('App\Models\eloCust','id_customers','uniqID_Customer'); 
     }
 }
