@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use App\Models\eloCust;
 
 class eloCustController extends Controller
@@ -25,7 +28,8 @@ class eloCustController extends Controller
                         'bod_customer'      => $key->bod_customer,
                         'phone_customer' 	=> $key->phone_customer,
                         'alamat'            => $kAdr->alamat,
-                        'bank_rekening'     => $kRek->bank_rekening
+                        'bank_rekening'     => $kRek->bank_rekening,
+                        'nomor_rekening'    => $kRek->nomor_rekening,
                     );
                 }
             }
@@ -44,35 +48,36 @@ class eloCustController extends Controller
     }
     public function show($id) {
         // mengambil data konsumen by id dengan eloquent ORM
-        $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('uniqID_Customer',$id)->get();
-        // mengubah ke array
-        $data       = $konsumen->toArray();
-        // mengubah ke objek
-        $object     = json_decode(json_encode($data),FALSE);
-        // passing data
-        foreach($object as $key) {
-            foreach($key->elo_adr as $kAdr) {
-                foreach($key->elo_rek as $kRek) {
-                    foreach($key->elo_cust_img as $kImg) {
-                        $dtkonsumen[]       =   array(
-                            'uniqID_Customer' 	=> $key->uniqID_Customer,
-                            'email_customer' 	=> $key->email_customer,
-                            'nama_customer' 	=> $key->nama_customer,
-                            'bod_customer'      => $key->bod_customer,
-                            'phone_customer' 	=> $key->phone_customer,
-                            'alamat'            => $kAdr->alamat,
-                            'bank_rekening'     => $kRek->bank_rekening,
-                            'nomor_rekening'    => $kRek->nomor_rekening,
-                            'file_location'     => $kImg->file_location,
-                            'file_image'        => $kImg->file_image
-                        );
+        $konsumen   = eloCust::select('uniqID_Customer','email_customer','nama_customer','bod_customer','phone_customer')
+        ->with('eloAdr:id_customers,alamat','eloRek:id_customers,nomor_rekening,bank_rekening','eloCustImg:id_customers,file_location,file_image')
+        ->where('uniqID_Customer',$id)->get();
+        // mapping data
+        foreach($konsumen as $key=>$value) {
+            $collection = collect($value)->map(function ($values,$keys) {
+                if (Arr::accessible($values)) {
+                    foreach($values as $item=>$valueitem) {
+                        return $valueitem;
                     }
+                } else {
+                    return $values;
                 }
-            }
+            });
         }
-        //dd($dtkonsumen);
+        // passing data
+        $dtkonsumen[]       =   array(
+            'uniqID_Customer' 	=> $collection['uniqID_Customer'],
+            'email_customer' 	=> $collection['email_customer'],
+            'nama_customer' 	=> $collection['nama_customer'],
+            'bod_customer'      => $collection['bod_customer'],
+            'phone_customer' 	=> $collection['phone_customer'],
+            'alamat'            => $collection['elo_adr']['alamat'],
+            'bank_rekening'     => $collection['elo_rek']['bank_rekening'],
+            'nomor_rekening'    => $collection['elo_rek']['nomor_rekening'],
+            'file_location'     => $collection['elo_cust_img']['file_location'],
+            'file_image'        => $collection['elo_cust_img']['file_image']
+        );
         if($konsumen->count() > 0) { 
-        //mengirim data konsumen ke view input
+        // mengirim data konsumen ke view input
             return view('formCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
         } 
         else { 
