@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\eloCust;
 
-class eloCustController extends Controller
-{
+class eloCustController extends Controller {
     public function index() {
         // mengambil data konsumen dengan eloquent ORM
         $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
@@ -34,8 +34,7 @@ class eloCustController extends Controller
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
     	    return view('indexCustomer',['konsumen' => json_decode(json_encode($collection),FALSE)]);
-        } 
-        else { 
+        } else { 
             return view('indexCustomer',['konsumen' => array()]);
         }
     }
@@ -75,8 +74,7 @@ class eloCustController extends Controller
         if($konsumen->count() > 0) { 
         // mengirim data konsumen ke view input
             return view('formCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
-        } 
-        else { 
+        } else { 
             return view('formCustomer',['konsumen' => array()]);
         }
     }
@@ -114,7 +112,7 @@ class eloCustController extends Controller
                 'file_location'     => 'storage/img',
                 'file_image'        => ($namefile==NULL) ? 'null':$namefile
             ];
-            // query builder insert data
+            // query eloquent insert data
             $insertCustomer =   eloCust::create($dataCustomer);
             $insertAlamat   =   eloCust::eloAdr()->create($dataAlamat);
             $insertRekening =   eloCust::eloRek()->create($dataRekening);
