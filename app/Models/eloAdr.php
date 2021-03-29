@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class eloAdr extends Model
-{
-    //use HasFactory;
+class eloAdr extends Model {
     // table
     protected $table = 'alamat';
     // primary key
@@ -15,11 +12,11 @@ class eloAdr extends Model
     // coloumn table
     protected $fillable = 
     [
+        'id_customers',
         'alamat',
         'provinsi'
     ];
-    // public function eloCust()
-    // {
-    //     return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');
-    // }
+    public function eloCust() {
+        return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');
+    }
 }

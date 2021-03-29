@@ -84,5 +84,43 @@ class eloCustController extends Controller
         // membuat ID customer
         $uniqID     = 'Cust-'.hash('crc32', $request->inputEmail);
         // data from input
+        $dataCustomer   = [
+            'uniqID_Customer'   => $uniqID,
+            'email_customer'    => $request->inputEmail,
+            'nama_customer'     => $request->inputName,
+            'bod_customer'      => $request->inputBOD,
+            'phone_customer'    => $request->inputPhone
+        ];
+        $dataAlamat     = [
+            'id_customers'  => $uniqID,
+            'alamat'        => $request->inputAddress
+        ];
+        $dataRekening   = [
+            'id_customers'      => $uniqID,
+            'nomor_rekening'    => $request->inputRekening,
+            'bank_rekening'     => $request->inputBank
+        ];
+        // mengecek customer yg sudah ada by email
+        $check  =   eloCust::where('email_customer','=',$request->inputEmail);
+        if ($check->count() > 0) {
+            $response       =   array('status' => 400,'message' => 'Data is store.','success' => 'Error','location' => '/customer');
+        } else {
+            if ($request->file('fileImg')!==NULL) {
+                $namefile   = $uniqID.'.'.$request->file('fileImg')->extension();
+                $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
+            }
+            $dataImage      = [
+                'id_customers'      => $uniqID,
+                'file_location'     => 'storage/img',
+                'file_image'        => ($namefile==NULL) ? 'null':$namefile
+            ];
+            // query builder insert data
+            $insertCustomer =   eloCust::create($dataCustomer);
+            $insertAlamat   =   eloCust::eloAdr()->create($dataAlamat);
+            $insertRekening =   eloCust::eloRek()->create($dataRekening);
+            $insertImage    =   eloCust::eloCustImg()->create($dataImage);
+            $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
+        }
+        echo json_encode($response);
     }
 }
