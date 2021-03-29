@@ -18,26 +18,22 @@ class eloCustController extends Controller
         // mengubah ke objek
         $object     = json_decode(json_encode($data),FALSE);
         // passing data
-        foreach($object as $key) {
-            foreach($key->elo_adr as $kAdr) {
-                foreach($key->elo_rek as $kRek) {
-                    $dtkonsumen[]       =   array(
-                        'uniqID_Customer' 	=> $key->uniqID_Customer,
-                        'email_customer' 	=> $key->email_customer,
-                        'nama_customer' 	=> $key->nama_customer,
-                        'bod_customer'      => $key->bod_customer,
-                        'phone_customer' 	=> $key->phone_customer,
-                        'alamat'            => $kAdr->alamat,
-                        'bank_rekening'     => $kRek->bank_rekening,
-                        'nomor_rekening'    => $kRek->nomor_rekening,
-                    );
-                }
-            }
-        }
-        //dd($dtkonsumen);
+        $collection = collect($object)->map(function ($values) {
+            return [
+                'uniqID_Customer' 	=> $values->uniqID_Customer,
+                'email_customer' 	=> $values->email_customer,
+                'nama_customer' 	=> $values->nama_customer,
+                'bod_customer'      => $values->bod_customer,
+                'phone_customer' 	=> $values->phone_customer,
+                'alamat'            => collect($values->elo_adr[0])->get('alamat'),
+                'bank_rekening'     => collect($values->elo_rek[0])->get('bank_rekening'),
+                'nomor_rekening'    => collect($values->elo_rek[0])->get('nomor_rekening'),
+                
+            ];
+        });
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
-    	    return view('indexCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
+    	    return view('indexCustomer',['konsumen' => json_decode(json_encode($collection),FALSE)]);
         } 
         else { 
             return view('indexCustomer',['konsumen' => array()]);
