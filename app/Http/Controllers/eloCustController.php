@@ -138,8 +138,8 @@ class eloCustController extends Controller {
         ];
         // query builder update data
         $updateCustomer =   eloCust::where('uniqID_Customer',$request->inputIDCustomer)->update($dataCustomer);
-        $updateAlamat   =   $updateCustomer->where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
-        $updateRekening =   $updateCustomer->where('id_customers',$request->inputIDCustomer)->update($dataRekening);
+        $updateAlamat   =   (new eloAdr)->where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
+        $updateRekening =   (new eloRek)->where('id_customers',$request->inputIDCustomer)->update($dataRekening);
         // mengecek file img
         if ($request->file('fileImg')!==NULL) {
             $namefile   = $request->inputIDCustomer.'.'.$request->file('fileImg')->extension();
@@ -148,7 +148,7 @@ class eloCustController extends Controller {
                 'file_location' => 'storage/img',
                 'file_image'    => $namefile
             ];
-            $updateImage    =   $updateCustomer->where('id_customers',$request->inputIDCustomer)->update($dataImage);
+            $updateImage    =   (new eloCustImg)->where('id_customers',$request->inputIDCustomer)->update($dataImage);
         }
         $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
         echo json_encode($response);
