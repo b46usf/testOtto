@@ -8,8 +8,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\eloCust;
+use App\Models\eloAdr;
+use App\Models\eloRek;
+use App\Models\eloCustImg;
 
 class eloCustController extends Controller {
+
     public function index() {
         // mengambil data konsumen dengan eloquent ORM
         $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
@@ -38,9 +42,11 @@ class eloCustController extends Controller {
             return view('indexCustomer',['konsumen' => array()]);
         }
     }
+
     public function create() {
         return view('formCustomer',['konsumen' => array()]);
     }
+
     public function show($id) {
         // mengambil data konsumen by id dengan eloquent ORM
         $konsumen   = eloCust::select('uniqID_Customer','email_customer','nama_customer','bod_customer','phone_customer')
@@ -78,6 +84,7 @@ class eloCustController extends Controller {
             return view('formCustomer',['konsumen' => array()]);
         }
     }
+
     public function store(Request $request) {
         // membuat ID customer
         $uniqID     = 'Cust-'.hash('crc32', $request->inputEmail);
@@ -112,7 +119,7 @@ class eloCustController extends Controller {
                 'file_location'     => 'storage/img',
                 'file_image'        => ($namefile==NULL) ? 'null':$namefile
             ];
-            // query eloquent insert data
+            // query eloquent ORM insert data
             $insertCustomer =   eloCust::create($dataCustomer);
             $insertAlamat   =   $insertCustomer->eloAdr()->create($dataAlamat);
             $insertRekening =   $insertCustomer->eloRek()->create($dataRekening);
@@ -121,6 +128,7 @@ class eloCustController extends Controller {
         }
         echo json_encode($response);
     }
+
     public function update(Request $request) {
         // data from input
         $dataCustomer   = [
@@ -136,10 +144,10 @@ class eloCustController extends Controller {
             'nomor_rekening'    => $request->inputRekening,
             'bank_rekening'     => $request->inputBank
         ];
-        // query builder update data
+        // query eloquent ORM update data
         $updateCustomer =   eloCust::where('uniqID_Customer',$request->inputIDCustomer)->update($dataCustomer);
-        $updateAlamat   =   (new eloAdr)->where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
-        $updateRekening =   (new eloRek)->where('id_customers',$request->inputIDCustomer)->update($dataRekening);
+        $updateAlamat   =   eloAdr::where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
+        $updateRekening =   eloRek::where('id_customers',$request->inputIDCustomer)->update($dataRekening);
         // mengecek file img
         if ($request->file('fileImg')!==NULL) {
             $namefile   = $request->inputIDCustomer.'.'.$request->file('fileImg')->extension();
@@ -148,7 +156,7 @@ class eloCustController extends Controller {
                 'file_location' => 'storage/img',
                 'file_image'    => $namefile
             ];
-            $updateImage    =   (new eloCustImg)->where('id_customers',$request->inputIDCustomer)->update($dataImage);
+            $updateImage    =   eloCustImg::where('id_customers',$request->inputIDCustomer)->update($dataImage);
         }
         $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
         echo json_encode($response);
