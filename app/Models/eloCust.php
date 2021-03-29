@@ -13,10 +13,10 @@ class eloCust extends Model {
     protected $fillable = 
     [
         'uniqID_Customer',
+        'email_customer',
         'nama_customer',
         'bod_customer',
         'phone_customer',
-        'status_delete',
     ];
     public function eloAdr() {
         return $this->hasMany('App\Models\eloAdr','id_customers','uniqID_Customer'); 

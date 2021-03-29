@@ -14,7 +14,7 @@ class eloRek extends Model {
     [
         'id_customers',
         'nomor_rekening',
-        'bank_rekening'
+        'bank_rekening',
     ];
     public function eloCust() {
         return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');

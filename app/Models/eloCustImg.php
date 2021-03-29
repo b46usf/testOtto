@@ -14,7 +14,7 @@ class eloCustImg extends Model {
     [
         'id_customers',
         'file_location',
-        'file_image'
+        'file_image',
     ];
     public function eloCust() {
         return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');

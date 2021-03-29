@@ -14,7 +14,6 @@ class eloAdr extends Model {
     [
         'id_customers',
         'alamat',
-        'provinsi'
     ];
     public function eloCust() {
         return $this->belongsTo('App\Models\eloCust','uniqID_Customer','id_customers');
