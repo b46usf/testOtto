@@ -114,9 +114,9 @@ class eloCustController extends Controller {
             ];
             // query eloquent insert data
             $insertCustomer =   eloCust::create($dataCustomer);
-            $insertAlamat   =   eloCust::eloAdr()->create($dataAlamat);
-            $insertRekening =   eloCust::eloRek()->create($dataRekening);
-            $insertImage    =   eloCust::eloCustImg()->create($dataImage);
+            $insertAlamat   =   $insertCustomer->eloAdr()->create($dataAlamat);
+            $insertRekening =   $insertCustomer->eloRek()->create($dataRekening);
+            $insertImage    =   $insertCustomer->eloCustImg()->create($dataImage);
             $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
         }
         echo json_encode($response);
