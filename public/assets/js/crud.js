@@ -1,8 +1,6 @@
 $('.btn-save').click(function(event){
     event.preventDefault();
-    var getUrl      = window.location;
-    var urLoc       = getUrl.pathname.split('/')[2];
-    if ($(this).text()=='Edit' || urLoc=='show') {
+    if ($(this).text()=='Edit') {
         $("form").find("input, select, textarea").prop("disabled", false);
         $("form").attr('action','/customer/update');
         $(this).text('Save');
@@ -30,8 +28,14 @@ $(document).on("click", ".btn-update", function (event) {
 });
 
 function save(idform) {
-    var dataParam   =   new FormData($("#"+idform)[0]); //$("#"+idform).serializeArray();
-    var action      =   $("#"+idform).attr('action');
+    var getUrl      = window.location;
+    var urLoc       = getUrl.pathname.split('/')[2];
+    var dataParam   = new FormData($("#"+idform)[0]);
+    if (urLoc=='show') {
+        var action      = '/customer/update';
+    } else {
+        var action      = $("#"+idform).attr('action');
+    }
     $.ajax({
         headers     : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         url         : action,
