@@ -1,6 +1,8 @@
 $('.btn-save').click(function(event){
     event.preventDefault();
-    if ($(this).text()=='Edit') {
+    var getUrl      = window.location;
+    var urLoc       = getUrl.pathname.split('/')[2];
+    if ($(this).text()=='Edit' || urLoc=='show') {
         $("form").find("input, select, textarea").prop("disabled", false);
         $("form").attr('action','/customer/update');
         $(this).text('Save');
@@ -78,7 +80,6 @@ function load_edit(idPage,pageAction) {
             console.log(error);console.log(status);console.log(xhr);
         }
     });
-    
 }
 
 $(document).on("click", ".btn-delete", function (event) {
