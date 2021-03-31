@@ -161,4 +161,16 @@ class eloCustController extends Controller {
         $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
         echo json_encode($response);
     }
+
+    public function delete(Request $request) {
+        // data from input
+        $dataCustomer   = [
+            'status_delete'    => 1
+        ];
+        // eloquent ORM delete data
+        $updCustomer    =   eloCust::where('uniqID_Customer',$request->dataID)->update($dataCustomer);
+        $delCustomer    =   eloCust::where('uniqID_Customer',$request->dataID)->delete();
+        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer');
+        echo json_encode($response);        
+    }    
 }

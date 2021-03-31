@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class eloCust extends Model {
+    use SoftDeletes;
     // table
     protected $table = 'customer';
+    protected $dates = ['deleted_at'];
     // primary key
     // protected $primaryKey = 'uniqID_Customer';
     // coloumn table
