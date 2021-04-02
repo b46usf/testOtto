@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Models\eloCust;
 use App\Models\eloAdr;
 use App\Models\eloRek;
@@ -14,9 +15,16 @@ use App\Models\eloCustImg;
 
 class eloCustController extends Controller {
 
-    public function index() {
+    public function index(Request $request) {
+        $currentURL = $request->segment(count(request()->segments()));
         // mengambil data konsumen dengan eloquent ORM
-        $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
+        if ($currentURL=='trash') {
+            $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',1)->onlyTrashed()->get();
+            $laman      = 'trashedCustomer';
+        } else {
+            $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
+            $laman      = 'indexCustomer';
+        }
         // mengubah ke array
         $data       = $konsumen->toArray();
         // mengubah ke objek
@@ -37,9 +45,9 @@ class eloCustController extends Controller {
         });
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view index
-    	    return view('indexCustomer',['konsumen' => json_decode(json_encode($collection),FALSE)]);
+    	    return view($laman,['konsumen' => json_decode(json_encode($collection),FALSE)]);
         } else { 
-            return view('indexCustomer',['konsumen' => array()]);
+            return view($laman,['konsumen' => array()]);
         }
     }
 
@@ -108,7 +116,7 @@ class eloCustController extends Controller {
         // mengecek customer yg sudah ada by email
         $check  =   eloCust::where('email_customer','=',$request->inputEmail);
         if ($check->count() > 0) {
-            $response       =   array('status' => 400,'message' => 'Data is store.','success' => 'Error','location' => '/customer');
+            $response       =   array('status' => 400,'message' => 'Data is store.','success' => 'Error','location' => '/customer/index');
         } else {
             if ($request->file('fileImg')!==NULL) {
                 $namefile   = $uniqID.'.'.$request->file('fileImg')->extension();
@@ -124,7 +132,7 @@ class eloCustController extends Controller {
             $insertAlamat   =   $insertCustomer->eloAdr()->create($dataAlamat);
             $insertRekening =   $insertCustomer->eloRek()->create($dataRekening);
             $insertImage    =   $insertCustomer->eloCustImg()->create($dataImage);
-            $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
+            $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer/index');
         }
         echo json_encode($response);
     }
@@ -158,7 +166,7 @@ class eloCustController extends Controller {
             ];
             $updateImage    =   eloCustImg::where('id_customers',$request->inputIDCustomer)->update($dataImage);
         }
-        $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer');
+        $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer/index');
         echo json_encode($response);
     }
 
@@ -170,7 +178,29 @@ class eloCustController extends Controller {
         // eloquent ORM delete data
         $updCustomer    =   eloCust::where('uniqID_Customer',$request->dataID)->update($dataCustomer);
         $delCustomer    =   eloCust::where('uniqID_Customer',$request->dataID)->delete();
-        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer');
+        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer/index');
+        echo json_encode($response);        
+    }
+
+    public function restore(Request $request) {
+        // data from input
+        $dataCustomer   = [
+            'status_delete'    => 0
+        ]; 
+        // eloquent ORM delete data
+        $updCustomer        =   eloCust::withTrashed()->where('uniqID_Customer',$request->dataID)->update($dataCustomer);
+        $restoreCustomer    =   eloCust::withTrashed()->where('uniqID_Customer',$request->dataID)->restore();
+        $response   =   array('status' => 200,'message' => 'Restore Success.','success' => 'OK','location' => '/customer/index');
         echo json_encode($response);        
     }    
+    
+    public function truedelete(Request $request) {
+        // eloquent ORM delete data
+        $delCustomer    =   eloCust::withTrashed()->where('uniqID_Customer',$request->dataID)->forceDelete();
+        // DB::statement("ALTER TABLE customer AUTO_INCREMENT = 1"); 
+        // DB::statement("ALTER TABLE alamat AUTO_INCREMENT = 1");
+        // DB::statement("ALTER TABLE rekening AUTO_INCREMENT = 1");
+        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer/trash');
+        echo json_encode($response);        
+    }        
 }

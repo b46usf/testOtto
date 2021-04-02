@@ -11,7 +11,7 @@
   </head>
   <body>
 <div class="container mt-5">
-<a href="#" data-action="/customer/input">Add</a> || <a href="#" data-action="/customer/trash">Trashed</a>
+<a href="#" data-action="/customer/index">Back</a>
 <div class="table-responsive">
   <table style="width: 100%;" id="tabCustomer" data-action="/customer/table" class="table table-md table-hover table-striped table-bordered">
     <thead><tr>
@@ -34,8 +34,8 @@
       <td>{{ $k->phone_customer }}</td>
       <td>{{ $k->bank_rekening }}</td>
 			<td>
-				<a href="#" data-type="editCustomer" data-action="/customer/show" data-id="{{ $k->uniqID_Customer }}">Edit</a> ||
-				<a href="#" data-type="deleteCustomer" data-action="/customer/delete" data-id="{{ $k->uniqID_Customer }}">Delete</a>
+				<a href="#" data-action="/customer/restore" data-id="{{ $k->uniqID_Customer }}">Restore</a> || 
+				<a href="#" data-action="/customer/truedelete" data-id="{{ $k->uniqID_Customer }}">Permanent Delete</a>
 			</td>
     </tr>
 		@endforeach

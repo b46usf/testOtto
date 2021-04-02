@@ -111,6 +111,23 @@ function deldata(dataParam,action) {
     }
 }
 
+function trashed(dataParam,action,text) {
+    if (confirm("Data Will Be "+text)) {
+        $.ajax({
+            headers     : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url         : action,
+            data        : {'dataID':dataParam},
+            method      : 'post',
+            dataType    : 'json',
+            success     : function(response){
+                location.href=response.location;
+            },error: function(xhr, status, error){
+                console.log(error);console.log(status);console.log(xhr);
+            }
+        });
+    }
+}
+
 function getUrlParameter(sParam) {
     var sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
@@ -203,12 +220,16 @@ $('a').click(function(event){
             location.href    =   $(this).data('action')+'/'+$(this).data('id');
         }
     }
-    if ($(this).text()=='Delete') {
+    else if ($(this).text()=='Delete') {
         if ($(this).data('type')=='deleteCustomer') {
             deldata($(this).data('id'),$(this).data('action'));
         }
     }
-    if ($(this).text()=='Back' || $(this).text()=='Add') {
-        location.href    =   $(this).data('action');
+    else {
+        if ($(this).text()=='Restore' || $(this).text()=='Permanent Delete') {
+            trashed($(this).data('id'),$(this).data('action'),$(this).text());
+        } else {
+            location.href    =   $(this).data('action');
+        }
     }
 });
