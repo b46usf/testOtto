@@ -1,5 +1,4 @@
-@extends('template/mainAuth')
-@section('title','Login')
+@extends('template.mainAuth')
 @section('content')
     <div class="container">
         <div class="col-md-4 offset-md-4 mt-5">
