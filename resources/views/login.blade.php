@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,14 +30,10 @@
                         </div>
                     @endif
                     @if (Session::has('success'))
-                        <div class="alert alert-success">
-                            {{ Session::get('success') }}
-                        </div>
+                        <div class="alert alert-success">{{ Session::get('success') }}</div>
                     @endif
                     @if (Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{ Session::get('error') }}
-                        </div>
+                        <div class="alert alert-danger">{{ Session::get('error') }}</div>
                     @endif
                     <div class="form-group">
                         <label for=""><strong>Email</strong></label>
@@ -51,7 +46,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary btn-block">Log In</button>
-                    <p class="text-center">Belum punya akun? <a href="{{ route('register') }}">Register</a> sekarang!</p>
+                    <p class="text-center">Belum punya akun? <a href="{{ route('register') }}">Register</a>!</p>
                 </div>
                 </form>
             </div>

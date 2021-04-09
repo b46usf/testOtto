@@ -113,6 +113,4 @@ class AuthController extends Controller
         Auth::logout(); // menghapus session yang aktif
         return redirect()->route('login');
     }
-  
-  
 }
