@@ -34,10 +34,12 @@ Route::get('/', function () {
 // Route::post('/customer/delete', 'App\Http\Controllers\konsumenController@delete');
 // Route::post('/customer/store', 'App\Http\Controllers\konsumenController@store');
 // route pages customer with eloquent model
-Route::get('/customer', 'App\Http\Controllers\eloCustController@index');
+Route::get('/customer/index', 'App\Http\Controllers\eloCustController@index');
 Route::get('/customer/input', 'App\Http\Controllers\eloCustController@create');
-//Route::get('/customer/show', 'App\Http\Controllers\eloCustController@show');
+Route::get('/customer/trash', 'App\Http\Controllers\eloCustController@index');
 Route::get('/customer/show/{id}', 'App\Http\Controllers\eloCustController@show');
+Route::post('/customer/restore/', 'App\Http\Controllers\eloCustController@restore');
+Route::post('/customer/truedelete/', 'App\Http\Controllers\eloCustController@truedelete');
 Route::post('/customer/edit', 'App\Http\Controllers\eloCustController@edit');
 Route::post('/customer/update', 'App\Http\Controllers\eloCustController@update');
 Route::post('/customer/delete', 'App\Http\Controllers\eloCustController@delete');
