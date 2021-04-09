@@ -66,11 +66,12 @@ class eloCustController extends Controller
                             'file_location'     => $kImg->file_location,
                             'file_image'        => $kImg->file_image
                         );
+                        
                     }
                 }
             }
         }
-        //dd($dtkonsumen);
+        // dd($data);
         if($konsumen->count() > 0) { 
         //mengirim data konsumen ke view input
             return view('formCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
