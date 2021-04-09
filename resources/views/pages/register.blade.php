@@ -39,8 +39,8 @@
                         <input type="password" name="password_confirmation" class="form-control" placeholder="Password">
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <div class="card-footer d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Register</button>
                     <p class="text-center">Sudah punya akun? <a href="{{ route('login') }}">Login</a>!</p>
                 </div>
                 </form>
