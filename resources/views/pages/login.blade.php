@@ -37,8 +37,8 @@
                         <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                <div class="card-footer d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">Log In</button>
                     <p class="text-center">Belum punya akun? <a href="{{ route('register') }}">Register</a>!</p>
                 </div>
                 </form>
