@@ -56,6 +56,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => 'auth'], function () {
  
     Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('customer/index', 'App\Http\Controllers\eloCustController@index')->name('customer');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
  
 });
