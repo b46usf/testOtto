@@ -47,7 +47,7 @@ Route::post('/customer/update', 'App\Http\Controllers\eloCustController@update')
 Route::post('/customer/delete', 'App\Http\Controllers\eloCustController@delete');
 Route::post('/customer/store', 'App\Http\Controllers\eloCustController@store');
 // route pages login
-Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
+// Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
 Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 Route::get('register', [AuthController::class, 'showFormRegister'])->name('register');
