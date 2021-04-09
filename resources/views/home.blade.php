@@ -15,11 +15,16 @@
                     <h3>Dashboard</h3>
                 </div>
                 <div class="card-body">
-                    <h5>Selamat datang di halaman dashboard, <strong>{{ Auth::user()->name }}</strong></h5>
-                    <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+                    <h4>Selamat datang di halaman dashboard, <strong>{{ Auth::user()->name }}</strong></h4>
+                    <h5>Klik Untuk Melanjutkan Ke Halaman <a href="#" data-action="/customer/index">Customer</a></h5>
+                    <a href="#" class="btn btn-danger" data-action="logout">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="../assets/js/crud.js"></script>
 </html>

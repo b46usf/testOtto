@@ -11,7 +11,7 @@
   </head>
   <body>
 <div class="container mt-5">
-<a href="#" data-action="/customer/input">Add</a> || <a href="#" data-action="/customer/trash">Trashed</a>
+<a href="#" data-action="/home"><< Back</a> || <a href="#" data-action="/customer/input">Add</a> || <a href="#" data-action="/customer/trash">Trashed</a>
 <div class="table-responsive">
   <table style="width: 100%;" id="tabCustomer" data-action="/customer/table" class="table table-md table-hover table-striped table-bordered">
     <thead><tr>
