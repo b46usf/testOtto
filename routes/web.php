@@ -28,6 +28,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::get('customer/index', [eloCustController::class, 'index'])->name('customer');
     Route::resource('customer', eloCustController::class);
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

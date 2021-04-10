@@ -55,7 +55,7 @@ class eloCustController extends Controller {
         return view('pages/formCustomer',['konsumen' => array()]);
     }
 
-    public function show($id) {
+    public function edit($id) {
         // mengambil data konsumen by id dengan eloquent ORM
         $konsumen   = eloCust::select('uniqID_Customer','email_customer','nama_customer','bod_customer','phone_customer')
         ->with('eloAdr:id_customers,alamat','eloRek:id_customers,nomor_rekening,bank_rekening','eloCustImg:id_customers,file_location,file_image')
@@ -137,7 +137,7 @@ class eloCustController extends Controller {
         echo json_encode($response);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, $id) {
         // data from input
         $dataCustomer   = [
             'email_customer'    => $request->inputEmail,

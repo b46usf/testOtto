@@ -7,7 +7,7 @@
         <h3>Data Customer</h3>
       </div>
       <div class="card-body">
-      <a href="#" data-action="/home"><< Back</a> || <a href="#" data-action="/customer/input">Add</a> || <a href="#" data-action="/customer/trash">Trashed</a>
+      <a href="#" data-action="/home"><< Back</a> || <a href="#" data-action="create">Add</a> || <a href="#" data-action="/customer/trash">Trashed</a>
         <div class="table-responsive">
           <table style="width: 100%;" id="tabCustomer" data-action="/customer/table" class="table table-md table-hover table-striped table-bordered">
             <thead><tr>
@@ -30,7 +30,7 @@
               <td>{{ $k->phone_customer }}</td>
               <td>{{ $k->bank_rekening }}</td>
               <td>
-                <a href="#" data-type="editCustomer" data-action="/customer/show" data-id="{{ $k->uniqID_Customer }}">Edit</a> ||
+                <a href="#" data-type="editCustomer" data-action="edit" data-id="{{ $k->uniqID_Customer }}">Edit</a> ||
                 <a href="#" data-type="deleteCustomer" data-action="/customer/delete" data-id="{{ $k->uniqID_Customer }}">Delete</a>
               </td>
             </tr>

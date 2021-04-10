@@ -30,12 +30,14 @@ $(document).on("click", ".btn-update", function (event) {
 
 function save(idform) {
     var getUrl = window.location;
-    var urLoc = getUrl.pathname.split("/")[2];
+    var urLoc = getUrl.pathname.split("/")[3];
     var dataParam = new FormData($("#" + idform)[0]);
-    if (urLoc == "show") {
+    if (urLoc == "edit") {
         var action = "/customer/update";
+        var method = "patch";
     } else {
         var action = $("#" + idform).attr("action");
+        var method = "post";
     }
     $.ajax({
         headers: {
@@ -43,7 +45,7 @@ function save(idform) {
         },
         url: action,
         data: dataParam,
-        method: "post",
+        method: method,
         dataType: "json",
         processData: false,
         contentType: false,
@@ -242,21 +244,19 @@ function loadTable(idTables, action) {
 }
 
 $(document).ready(function () {
-    var idPage = getUrlParameter("id");
-    var pageAction = getUrlParameter("action");
     var getUrl = window.location;
-    var urLoc = getUrl.pathname.split("/")[2];
+    var urLoc = getUrl.pathname.split("/")[3];
+    if (urLoc == "edit") {
+        $("form input").prop("disabled", true);
+        $(".btn-save").addClass("btn-edit");
+        $(".btn-save").text("Edit");
+    }
     // if (urLoc==='' || urLoc===undefined || urLoc=='undefined') {
     //     var extensions  = { "sFilter": "dataTables_filter text-right" };
     //     $.extend($.fn.dataTableExt.oStdClasses, extensions);
     //     var table       =   $('.table-responsive').find('.table');
     //     viewTables(table);
     // }
-    if (idPage === false || idPage == "false") {
-        return false;
-    } else {
-        load_edit(idPage, pageAction);
-    }
 });
 
 $("a").click(function (event) {
@@ -264,7 +264,7 @@ $("a").click(function (event) {
     if ($(this).text() == "Edit") {
         if ($(this).data("type") == "editCustomer") {
             //location.href    =   $(this).data('action')+'?action='+$(this).data('type')+'&id='+$(this).data('id');
-            location.href = $(this).data("action") + "/" + $(this).data("id");
+            location.href = $(this).data("id") + "/" + $(this).data("action");
         }
     } else if ($(this).text() == "Delete") {
         if ($(this).data("type") == "deleteCustomer") {
