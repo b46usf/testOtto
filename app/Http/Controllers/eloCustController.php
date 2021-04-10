@@ -170,7 +170,7 @@ class eloCustController extends Controller {
         echo json_encode($response);
     }
 
-    public function destroy(Request $request) {
+    public function destroy(Request $request) { dd('aaa');
         // data from input
         $dataCustomer   = [
             'status_delete'    => 1
@@ -182,7 +182,7 @@ class eloCustController extends Controller {
         echo json_encode($response);        
     }
 
-    public function restore(Request $request) {
+    public function restore(Request $request) { dd($request->all());
         // data from input
         $dataCustomer   = [
             'status_delete'    => 0
