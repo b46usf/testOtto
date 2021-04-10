@@ -1,16 +1,5 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <link rel="stylesheet" href="../../assets/css/uploadFile.css">
-    <title>Form Input</title>
-  </head>
-  <body>
+@extends('layout.backEnd')
+@section('container')
 <div class="container mt-5">
 <!--Tanpa Jquery-->
 @php
@@ -94,11 +83,4 @@ if (count($konsumen) > 0 ) {
   </div>
 </form>
 </div>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/crud.js"></script>
-    <script src="../../assets/js/uploadFile.js"></script>
-  </body>
-</html>
+@endsection

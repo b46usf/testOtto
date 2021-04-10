@@ -20,7 +20,7 @@ class eloCustController extends Controller {
         // mengambil data konsumen dengan eloquent ORM
         if ($currentURL=='trash') {
             $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',1)->onlyTrashed()->get();
-            $laman      = 'trashedCustomer';
+            $laman      = 'pages/trashedCustomer';
         } else {
             $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
             $laman      = 'pages/indexCustomer';
