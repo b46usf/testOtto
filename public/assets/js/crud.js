@@ -33,11 +33,11 @@ function save(idform) {
     var urLoc = getUrl.pathname.split("/")[3];
     var dataParam = new FormData($("#" + idform)[0]);
     if (urLoc == "edit") {
-        var action = "/customer/update";
-        var method = "patch";
+        var action = "/customer/" + getUrl.pathname.split("/")[2];
+        dataParam.append("_method", "PATCH");
     } else {
-        var action = $("#" + idform).attr("action");
-        var method = "post";
+        var action = "/customer";
+        dataParam.append("_method", "POST");
     }
     $.ajax({
         headers: {
@@ -45,7 +45,7 @@ function save(idform) {
         },
         url: action,
         data: dataParam,
-        method: method,
+        type: "post",
         dataType: "json",
         processData: false,
         contentType: false,
@@ -107,7 +107,7 @@ function load_edit(idPage, pageAction) {
 $(document).on("click", ".btn-delete", function (event) {
     event.preventDefault();
     var dataParam = $(this).data("id");
-    var url = "/customer/delete";
+    var url = "/customer/" + dataParam;
     var action = url;
     deldata(dataParam, action);
 });
@@ -119,8 +119,8 @@ function deldata(dataParam, action) {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             url: action,
-            data: { dataID: dataParam },
-            method: "post",
+            data: { dataID: dataParam, _method: "DELETE" },
+            type: "post",
             dataType: "json",
             success: function (response) {
                 location.href = response.location;

@@ -33,7 +33,7 @@ if (count($konsumen) > 0 ) {
         <h3>Form Customer</h3>
       </div>
       <div class="card-body">
-        <form id="fromCustomer" method="post" action="/customer/store" class="needs-validation" novalidate enctype="multipart/form-data">
+        <form id="fromCustomer" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-4">
               <div class="picture mb-2 text-center d-grid gap-2">           

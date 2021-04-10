@@ -153,24 +153,24 @@ class eloCustController extends Controller {
             'bank_rekening'     => $request->inputBank
         ];
         // query eloquent ORM update data
-        $updateCustomer =   eloCust::where('uniqID_Customer',$request->inputIDCustomer)->update($dataCustomer);
-        $updateAlamat   =   eloAdr::where('id_customers',$request->inputIDCustomer)->update($dataAlamat);
-        $updateRekening =   eloRek::where('id_customers',$request->inputIDCustomer)->update($dataRekening);
+        $updateCustomer =   eloCust::where('uniqID_Customer',$id)->update($dataCustomer);
+        $updateAlamat   =   eloAdr::where('id_customers',$id)->update($dataAlamat);
+        $updateRekening =   eloRek::where('id_customers',$id)->update($dataRekening);
         // mengecek file img
         if ($request->file('fileImg')!==NULL) {
-            $namefile   = $request->inputIDCustomer.'.'.$request->file('fileImg')->extension();
+            $namefile   = $id.'.'.$request->file('fileImg')->extension();
             $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
             $dataImage      = [
                 'file_location' => 'storage/img',
                 'file_image'    => $namefile
             ];
-            $updateImage    =   eloCustImg::where('id_customers',$request->inputIDCustomer)->update($dataImage);
+            $updateImage    =   eloCustImg::where('id_customers',$id)->update($dataImage);
         }
         $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/customer/index');
         echo json_encode($response);
     }
 
-    public function delete(Request $request) {
+    public function destroy(Request $request) {
         // data from input
         $dataCustomer   = [
             'status_delete'    => 1
@@ -197,9 +197,6 @@ class eloCustController extends Controller {
     public function truedelete(Request $request) {
         // eloquent ORM delete data
         $delCustomer    =   eloCust::withTrashed()->where('uniqID_Customer',$request->dataID)->forceDelete();
-        // DB::statement("ALTER TABLE customer AUTO_INCREMENT = 1"); 
-        // DB::statement("ALTER TABLE alamat AUTO_INCREMENT = 1");
-        // DB::statement("ALTER TABLE rekening AUTO_INCREMENT = 1");
         $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/customer/trash');
         echo json_encode($response);        
     }        
