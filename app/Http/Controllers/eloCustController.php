@@ -23,7 +23,7 @@ class eloCustController extends Controller {
             $laman      = 'trashedCustomer';
         } else {
             $konsumen   = eloCust::with('eloAdr','eloRek','eloCustImg')->where('status_delete',0)->get();
-            $laman      = 'indexCustomer';
+            $laman      = 'pages/indexCustomer';
         }
         // mengubah ke array
         $data       = $konsumen->toArray();
