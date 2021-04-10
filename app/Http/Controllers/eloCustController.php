@@ -52,7 +52,7 @@ class eloCustController extends Controller {
     }
 
     public function create() {
-        return view('formCustomer',['konsumen' => array()]);
+        return view('pages/formCustomer',['konsumen' => array()]);
     }
 
     public function show($id) {
@@ -87,9 +87,9 @@ class eloCustController extends Controller {
         );
         if($konsumen->count() > 0) { 
         // mengirim data konsumen ke view input
-            return view('formCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
+            return view('pages/formCustomer',['konsumen' => json_decode(json_encode($dtkonsumen),FALSE)]);
         } else { 
-            return view('formCustomer',['konsumen' => array()]);
+            return view('pages/formCustomer',['konsumen' => array()]);
         }
     }
 

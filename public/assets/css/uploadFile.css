@@ -1,4 +1,4 @@
-.picture{
+.picture {
     overflow: hidden;
     transition: all 0.2s;
 }
@@ -10,10 +10,10 @@
     opacity: 0;
     position: absolute;
     top: 0;
-    width: 100%;
-    height: 80%;
+    width: 50%;
+    height: 50%;
 }
 
-.picture-src{
+.picture-src {
     width: 100%;
 }
