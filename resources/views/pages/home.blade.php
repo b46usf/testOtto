@@ -8,8 +8,6 @@
                 </div>
                 <div class="card-body">
                     <h4>Selamat datang di halaman dashboard, <strong>{{ Auth::user()->name }}</strong></h4>
-                    <h5>Klik Untuk Melanjutkan Ke Halaman <a href="#" data-action="/customer/index">Customer</a></h5>
-                    <a href="#" class="btn btn-danger" data-action="logout">Logout</a>
                 </div>
             </div>
         </div>
