@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\eloCustController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,30 @@ use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('welcome');
 });
+Auth::routes();
+// route pages login
+Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+Route::get('register', [AuthController::class, 'showFormRegister'])->name('register');
+Route::post('register', [AuthController::class, 'register']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('customer', eloCustController::class);
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+});
+// route pages customer with eloquent model
+// Route::get('/customer/index', 'App\Http\Controllers\eloCustController@index');
+// Route::get('/customer/input', 'App\Http\Controllers\eloCustController@create');
+// Route::get('/customer/trash', 'App\Http\Controllers\eloCustController@index');
+// Route::get('/customer/show/{id}', 'App\Http\Controllers\eloCustController@show');
+// Route::post('/customer/restore/', 'App\Http\Controllers\eloCustController@restore');
+// Route::post('/customer/truedelete/', 'App\Http\Controllers\eloCustController@truedelete');
+// Route::post('/customer/edit', 'App\Http\Controllers\eloCustController@edit');
+// Route::post('/customer/update', 'App\Http\Controllers\eloCustController@update');
+// Route::post('/customer/delete', 'App\Http\Controllers\eloCustController@delete');
+// Route::post('/customer/store', 'App\Http\Controllers\eloCustController@store');
 // route pages customer with model query builder
 // Route::get('/customer', 'App\Http\Controllers\customerController@index');
 // Route::get('/customer/input', 'App\Http\Controllers\customerController@create');
@@ -35,28 +62,3 @@ Route::get('/', function () {
 // Route::post('/customer/update', 'App\Http\Controllers\konsumenController@update');
 // Route::post('/customer/delete', 'App\Http\Controllers\konsumenController@delete');
 // Route::post('/customer/store', 'App\Http\Controllers\konsumenController@store');
-// route pages customer with eloquent model
-Route::get('/customer/index', 'App\Http\Controllers\eloCustController@index');
-Route::get('/customer/input', 'App\Http\Controllers\eloCustController@create');
-Route::get('/customer/trash', 'App\Http\Controllers\eloCustController@index');
-Route::get('/customer/show/{id}', 'App\Http\Controllers\eloCustController@show');
-Route::post('/customer/restore/', 'App\Http\Controllers\eloCustController@restore');
-Route::post('/customer/truedelete/', 'App\Http\Controllers\eloCustController@truedelete');
-Route::post('/customer/edit', 'App\Http\Controllers\eloCustController@edit');
-Route::post('/customer/update', 'App\Http\Controllers\eloCustController@update');
-Route::post('/customer/delete', 'App\Http\Controllers\eloCustController@delete');
-Route::post('/customer/store', 'App\Http\Controllers\eloCustController@store');
-// route pages login
-// Route::get('/', [AuthController::class, 'showFormLogin'])->name('login');
-Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
-Route::post('login', [AuthController::class, 'login']);
-Route::get('register', [AuthController::class, 'showFormRegister'])->name('register');
-Route::post('register', [AuthController::class, 'register']);
- 
-Route::group(['middleware' => 'auth'], function () {
- 
-    Route::get('home', [HomeController::class, 'index'])->name('home');
-    Route::get('customer/index', 'App\Http\Controllers\eloCustController@index')->name('customer');
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
- 
-});
