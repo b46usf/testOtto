@@ -40,13 +40,24 @@ class PegawaiController extends Controller
         if($pegawai->count() > 0) { 
         //mengirim data pegawai ke view index
     	    return view($laman,['pegawai' => json_decode(json_encode($collection),FALSE)]);
-        } else { 
+        } else {
             return view($laman,['pegawai' => array()]);
         }
     }
 
     public function create() {
-        return view('pages/formPegawai',['pegawai' => array()]);
+        // mengambil data pegawai dengan kode paling besar
+        $qrymax =   Pegawai::max('nomor_induk'); 
+        // mengambil angka dari kode pegawai terbesar, menggunakan fungsi substr dan diubah ke integer dengan (int)
+        $urutan =   (int) substr($qrymax, 4);
+        $urutan++;
+        // membentuk kode pegawai baru
+        // perintah sprintf("%03s", $urutan); berguna untuk membuat string menjadi 3 karakter
+        // misalnya perintah sprintf("%03s", 15); maka akan menghasilkan '015'
+        // angka yang diambil tadi digabungkan dengan kode huruf yang kita inginkan 
+        $huruf = "IP06";
+        $kodepegawai = $huruf . sprintf("%03s", $urutan);
+        return view('pages/formPegawai',['pegawai' => array('nomor_induk'=>$kodepegawai)]);
     }
 
     public function edit($id) {
