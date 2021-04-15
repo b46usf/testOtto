@@ -12,8 +12,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#" data-action="/customer/index">Customer</a>
-                <a class="nav-link" href="#" data-action="/User/index">User</a>
+                <a class="nav-link" href="#" data-action="/pegawai/index">Pegawai</a>
+                <a class="nav-link" href="#" data-action="/cuti/index">Cuti</a>
                 <a class="nav-link text-danger" href="#" data-action="logout">Logout</a>
             </div>
         </div>
