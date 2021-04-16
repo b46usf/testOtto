@@ -64,8 +64,7 @@ class PegawaiController extends Controller
         // mengambil data pegawai by id dengan eloquent ORM
         $pegawai   = Pegawai::select('nomor_induk','nama','alamat','tanggal_lahir','tanggal_gabung')->where('nomor_induk',$id)->get();
         if($pegawai->count() > 0) {
-        // mengirim data pegawai ke view input
-        // mapping data
+        // mengirim data pegawai ke view input mapping data
             foreach($pegawai as $key=>$value) {
                 $collection = collect($value)->map(function ($values,$keys) {
                     if (Arr::accessible($values)) {
@@ -92,110 +91,52 @@ class PegawaiController extends Controller
     }
 
     public function store(Request $request) {
-        // membuat ID Pegawai
-        $uniqID     = 'Cust-'.hash('crc32', $request->inputEmail);
         // data from input
         $dataPegawai   = [
-            'uniqID_Pegawai'   => $uniqID,
-            'email_Pegawai'    => $request->inputEmail,
-            'nama_Pegawai'     => $request->inputName,
-            'bod_Pegawai'      => $request->inputBOD,
-            'phone_Pegawai'    => $request->inputPhone
+            'nomor_induk'   => $request->noInduk,
+            'nama'          => $request->inputName,
+            'alamat'        => $request->inputAddress,
+            'tanggal_lahir' => $request->inputBOD,
+            'tanggal_gabung'=> $request->inputJOD
         ];
-        $dataAlamat     = [
-            'id_Pegawais'  => $uniqID,
-            'alamat'        => $request->inputAddress
-        ];
-        $dataRekening   = [
-            'id_Pegawais'      => $uniqID,
-            'nomor_rekening'    => $request->inputRekening,
-            'bank_rekening'     => $request->inputBank
-        ];
-        // mengecek Pegawai yg sudah ada by email
-        $check  =   Pegawai::where('email_Pegawai','=',$request->inputEmail);
-        if ($check->count() > 0) {
-            $response       =   array('status' => 400,'message' => 'Data is store.','success' => 'Error','location' => '/Pegawai/index');
-        } else {
-            if ($request->file('fileImg')!==NULL) {
-                $namefile   = $uniqID.'.'.$request->file('fileImg')->extension();
-                $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
-            }
-            $dataImage      = [
-                'id_Pegawais'      => $uniqID,
-                'file_location'     => 'storage/img',
-                'file_image'        => ($namefile==NULL) ? 'null':$namefile
-            ];
-            // query eloquent ORM insert data
-            $insertPegawai =   Pegawai::create($dataPegawai);
-            $insertAlamat   =   $insertPegawai->eloAdr()->create($dataAlamat);
-            $insertRekening =   $insertPegawai->eloRek()->create($dataRekening);
-            $insertImage    =   $insertPegawai->eloCustImg()->create($dataImage);
-            $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/Pegawai/index');
-        }
+        // query eloquent ORM insert data
+        $insertPegawai  =   Pegawai::create($dataPegawai);
+        $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);
     }
 
     public function update(Request $request, $id) {
         // data from input
         $dataPegawai   = [
-            'email_Pegawai'    => $request->inputEmail,
-            'nama_Pegawai'     => $request->inputName,
-            'bod_Pegawai'      => $request->inputBOD,
-            'phone_Pegawai'    => $request->inputPhone
-        ];
-        $dataAlamat     = [
-            'alamat'        => $request->inputAddress
-        ];
-        $dataRekening   = [
-            'nomor_rekening'    => $request->inputRekening,
-            'bank_rekening'     => $request->inputBank
+            'nama'          => $request->inputName,
+            'alamat'        => $request->inputAddress,
+            'tanggal_lahir' => $request->inputBOD,
+            'tanggal_gabung'=> $request->inputJOD
         ];
         // query eloquent ORM update data
-        $updatePegawai =   Pegawai::where('uniqID_Pegawai',$id)->update($dataPegawai);
-        $updateAlamat   =   eloAdr::where('id_Pegawais',$id)->update($dataAlamat);
-        $updateRekening =   eloRek::where('id_Pegawais',$id)->update($dataRekening);
-        // mengecek file img
-        if ($request->file('fileImg')!==NULL) {
-            $namefile   = $id.'.'.$request->file('fileImg')->extension();
-            $uploadFile = Storage::putFileAs('public/img',$request->file('fileImg'),$namefile);
-            $dataImage      = [
-                'file_location' => 'storage/img',
-                'file_image'    => $namefile
-            ];
-            $updateImage    =   eloCustImg::where('id_Pegawais',$id)->update($dataImage);
-        }
-        $response       =   array('status' => 200,'message' => 'Save Success.','success' => 'OK','location' => '/Pegawai/index');
+        $updatePegawai  =   Pegawai::where('nomor_induk',$id)->update($dataPegawai);
+        $response       =   array('status' => 200,'message' => 'Update Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);
     }
 
     public function destroy(Request $request) {
-        // data from input
-        $dataPegawai   = [
-            'status_delete'    => 1
-        ];
         // eloquent ORM delete data
-        $updPegawai    =   Pegawai::where('uniqID_Pegawai',$request->dataID)->update($dataPegawai);
-        $delPegawai    =   Pegawai::where('uniqID_Pegawai',$request->dataID)->delete();
-        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/Pegawai/index');
+        $delPegawai    =   Pegawai::where('nomor_induk',$request->noInduk)->delete();
+        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);        
     }
 
     public function restore(Request $request) {
-        // data from input
-        $dataPegawai   = [
-            'status_delete'    => 0
-        ]; 
-        // eloquent ORM delete data
-        $updPegawai        =   Pegawai::withTrashed()->where('uniqID_Pegawai',$request->dataID)->update($dataPegawai);
-        $restorePegawai    =   Pegawai::withTrashed()->where('uniqID_Pegawai',$request->dataID)->restore();
-        $response   =   array('status' => 200,'message' => 'Restore Success.','success' => 'OK','location' => '/Pegawai/index');
+        // eloquent ORM restore data
+        $restorePegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->noInduk)->restore();
+        $response       =   array('status' => 200,'message' => 'Restore Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);        
     }    
     
     public function truedelete(Request $request) {
-        // eloquent ORM delete data
-        $delPegawai    =   Pegawai::withTrashed()->where('uniqID_Pegawai',$request->dataID)->forceDelete();
-        $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/Pegawai/trash');
+        // eloquent ORM delete permanent data
+        $delPegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->noInduk)->forceDelete();
+        $response   =   array('status' => 200,'message' => 'Delete Permanent Success.','success' => 'OK','location' => '/pegawai/trash');
         echo json_encode($response);        
     }
 }
