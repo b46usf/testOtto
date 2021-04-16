@@ -63,28 +63,28 @@ class PegawaiController extends Controller
     public function edit($id) {
         // mengambil data pegawai by id dengan eloquent ORM
         $pegawai   = Pegawai::select('nomor_induk','nama','alamat','tanggal_lahir','tanggal_gabung')->where('nomor_induk',$id)->get();
-        // mapping data
-        foreach($pegawai as $key=>$value) {
-            $collection = collect($value)->map(function ($values,$keys) {
-                if (Arr::accessible($values)) {
-                    foreach($values as $item=>$valueitem) {
-                        return $valueitem;
-                    }
-                } else {
-                    return $values;
-                }
-            });
-        }
-        // passing data
-        $dtpegawai[]       =   array(
-            'nomor_induk'       => $collection['nomor_induk'],
-            'nama'              => $collection['nama'],
-            'alamat'            => $collection['alamat'],
-            'tanggal_lahir'     => $collection['tanggal_lahir'],
-            'tanggal_gabung'    => $collection['tanggal_gabung'],
-        );
-        if($pegawai->count() > 0) { 
+        if($pegawai->count() > 0) {
         // mengirim data pegawai ke view input
+        // mapping data
+            foreach($pegawai as $key=>$value) {
+                $collection = collect($value)->map(function ($values,$keys) {
+                    if (Arr::accessible($values)) {
+                        foreach($values as $item=>$valueitem) {
+                            return $valueitem;
+                        }
+                    } else {
+                        return $values;
+                    }
+                });
+            }
+            // passing data
+            $dtpegawai[]       =   array(
+                'nomor_induk'       => $collection['nomor_induk'],
+                'nama'              => $collection['nama'],
+                'alamat'            => $collection['alamat'],
+                'tanggal_lahir'     => $collection['tanggal_lahir'],
+                'tanggal_gabung'    => $collection['tanggal_gabung'],
+            );
             return view('pages/formPegawai',['pegawai' => json_decode(json_encode($dtpegawai),FALSE)]);
         } else { 
             return view('pages/404');

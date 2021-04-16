@@ -2,7 +2,7 @@
 @section('container')
 <div class="container mt-5">
 <!--Tanpa Jquery-->
-@php dd(gettype($pegawai[0]));
+@php
 if (count($pegawai) > 0 ) {
   if (isset($pegawai[0])){
     foreach($pegawai as $k) {
