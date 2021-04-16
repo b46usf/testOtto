@@ -2,7 +2,7 @@ $(".btn-save").click(function (event) {
     event.preventDefault();
     if ($(this).text() == "Edit") {
         $("form").find("input, select, textarea").prop("disabled", false);
-        $("form").attr("action", "/customer/update");
+        $("form").attr("action", "/Pegawai/update");
         $(this).text("Save");
     } else {
         var form = $("form");
@@ -21,9 +21,9 @@ $(document).on("click", ".btn-update", function (event) {
     event.preventDefault();
     var dataParam = $(this).data("id");
     var pageAction = $(this).data("action");
-    if (pageAction == "editCustomer") {
+    if (pageAction == "editPegawai") {
         var pageView =
-            "/customer/show?action=" + pageAction + "&id=" + dataParam;
+            "/Pegawai/show?action=" + pageAction + "&id=" + dataParam;
     }
     location.href = pageView;
 });
@@ -33,10 +33,10 @@ function save(idform) {
     var urLoc = getUrl.pathname.split("/")[3];
     var dataParam = new FormData($("#" + idform)[0]);
     if (urLoc == "edit") {
-        var action = "/customer/" + getUrl.pathname.split("/")[2];
+        var action = "/Pegawai/" + getUrl.pathname.split("/")[2];
         dataParam.append("_method", "PATCH");
     } else {
-        var action = "/customer";
+        var action = "/Pegawai";
         dataParam.append("_method", "POST");
     }
     $.ajax({
@@ -63,7 +63,7 @@ function save(idform) {
 }
 
 function load_edit(idPage, pageAction) {
-    var url = "/customer/edit";
+    var url = "/Pegawai/edit";
     var action = url;
     $.ajax({
         headers: {
@@ -75,13 +75,13 @@ function load_edit(idPage, pageAction) {
         dataType: "json",
         success: function (response) {
             var obj = response.data[0];
-            if (pageAction == "editCustomer") {
-                $("#inputIDCustomer").val(obj.id_customers);
-                $("#inputEmail").val(obj.email_customer);
-                $("#inputName").val(obj.nama_customer);
+            if (pageAction == "editPegawai") {
+                $("#inputIDPegawai").val(obj.id_Pegawais);
+                $("#inputEmail").val(obj.email_Pegawai);
+                $("#inputName").val(obj.nama_Pegawai);
                 $("#inputAddress").val(obj.alamat);
-                $("#inputPhone").val(obj.phone_customer);
-                $("#inputBOD").val(obj.bod_customer);
+                $("#inputPhone").val(obj.phone_Pegawai);
+                $("#inputBOD").val(obj.bod_Pegawai);
                 $("#inputRekening").val(obj.nomor_rekening);
                 $("#inputBank").val(obj.bank_rekening);
                 $("#wizardPicturePreview")
@@ -107,7 +107,7 @@ function load_edit(idPage, pageAction) {
 $(document).on("click", ".btn-delete", function (event) {
     event.preventDefault();
     var dataParam = $(this).data("id");
-    var url = "/customer/" + dataParam;
+    var url = "/Pegawai/" + dataParam;
     var action = url;
     deldata(dataParam, action);
 });
@@ -262,12 +262,12 @@ $(document).ready(function () {
 $("a").click(function (event) {
     event.preventDefault();
     if ($(this).text() == "Edit") {
-        if ($(this).data("type") == "editCustomer") {
+        if ($(this).data("type") == "editPegawai") {
             //location.href    =   $(this).data('action')+'?action='+$(this).data('type')+'&id='+$(this).data('id');
             location.href = $(this).data("id") + "/" + $(this).data("action");
         }
     } else if ($(this).text() == "Delete") {
-        if ($(this).data("type") == "deleteCustomer") {
+        if ($(this).data("type") == "deletePegawai") {
             deldata($(this).data("id"), $(this).data("action"));
         }
     } else {

@@ -2,15 +2,9 @@
 @section('container')
 <div class="container mt-5">
 <!--Tanpa Jquery-->
-@php
+@php dd(gettype($pegawai[0]));
 if (count($pegawai) > 0 ) {
-  if (gettype($pegawai)=='array') {
-    $valID      = $pegawai['nomor_induk'];
-    $valname    = '';
-    $valaddress = '';
-    $valbod     = '';
-    $valjod     = '';
-  } else {
+  if (gettype($pegawai[0])=='object') {
     foreach($pegawai as $k) {
       $valID      = $k->nomor_induk;
       $valname    = $k->nama;
@@ -18,6 +12,12 @@ if (count($pegawai) > 0 ) {
       $valbod     = $k->tanggal_lahir;
       $valjod     = $k->tanggal_gabung;
     }
+  } else {
+    $valID      = $pegawai['nomor_induk'];
+    $valname    = '';
+    $valaddress = '';
+    $valbod     = '';
+    $valjod     = '';
   } 
 }
 @endphp
