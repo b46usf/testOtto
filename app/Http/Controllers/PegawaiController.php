@@ -62,9 +62,7 @@ class PegawaiController extends Controller
 
     public function edit($id) {
         // mengambil data pegawai by id dengan eloquent ORM
-        $pegawai   = Pegawai::select('uniqID_Pegawai','email_Pegawai','nama_Pegawai','bod_Pegawai','phone_Pegawai')
-        ->with('eloAdr:id_Pegawais,alamat','eloRek:id_Pegawais,nomor_rekening,bank_rekening','eloCustImg:id_Pegawais,file_location,file_image')
-        ->where('uniqID_Pegawai',$id)->get();
+        $pegawai   = Pegawai::select('nomor_induk','nama','alamat','tanggal_lahir','tanggal_gabung')->where('nomor_induk',$id)->get();
         // mapping data
         foreach($pegawai as $key=>$value) {
             $collection = collect($value)->map(function ($values,$keys) {
@@ -79,22 +77,17 @@ class PegawaiController extends Controller
         }
         // passing data
         $dtpegawai[]       =   array(
-            'uniqID_Pegawai' 	=> $collection['uniqID_Pegawai'],
-            'email_Pegawai' 	=> $collection['email_Pegawai'],
-            'nama_Pegawai' 	=> $collection['nama_Pegawai'],
-            'bod_Pegawai'      => $collection['bod_Pegawai'],
-            'phone_Pegawai' 	=> $collection['phone_Pegawai'],
-            'alamat'            => $collection['elo_adr']['alamat'],
-            'bank_rekening'     => $collection['elo_rek']['bank_rekening'],
-            'nomor_rekening'    => $collection['elo_rek']['nomor_rekening'],
-            'file_location'     => $collection['elo_cust_img']['file_location'],
-            'file_image'        => $collection['elo_cust_img']['file_image']
+            'nomor_induk'       => $collection['nomor_induk'],
+            'nama'              => $collection['nama'],
+            'alamat'            => $collection['alamat'],
+            'tanggal_lahir'     => $collection['tanggal_lahir'],
+            'tanggal_gabung'    => $collection['tanggal_gabung'],
         );
         if($pegawai->count() > 0) { 
         // mengirim data pegawai ke view input
             return view('pages/formPegawai',['pegawai' => json_decode(json_encode($dtpegawai),FALSE)]);
         } else { 
-            return view('pages/formPegawai',['pegawai' => array()]);
+            return view('pages/404');
         }
     }
 
