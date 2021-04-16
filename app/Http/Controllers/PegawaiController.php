@@ -31,8 +31,8 @@ class PegawaiController extends Controller
         $collection = collect($object)->map(function ($values) {
             return [
                 'nomor_induk'       => $values->nomor_induk,
-                'nama'              => $values->nama,
-                'alamat'            => $values->alamat,
+                'nama'              => ucwords($values->nama),
+                'alamat'            => ucwords($values->alamat),
                 'tanggal_lahir'     => \Carbon\Carbon::createFromFormat('Y-m-d', $values->tanggal_lahir)->format('d-M-Y'),
                 'tanggal_gabung'    => \Carbon\Carbon::createFromFormat('Y-m-d', $values->tanggal_gabung)->format('d-M-Y'),
             ];
@@ -79,8 +79,8 @@ class PegawaiController extends Controller
             // passing data
             $dtpegawai[]       =   array(
                 'nomor_induk'       => $collection['nomor_induk'],
-                'nama'              => $collection['nama'],
-                'alamat'            => $collection['alamat'],
+                'nama'              => ucwords($collection['nama']),
+                'alamat'            => ucwords($collection['alamat']),
                 'tanggal_lahir'     => $collection['tanggal_lahir'],
                 'tanggal_gabung'    => $collection['tanggal_gabung'],
             );
