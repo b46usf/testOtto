@@ -25,6 +25,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('register', [AuthController::class, 'showFormRegister'])->name('register');
 Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('cuti/index', [CutiController::class, 'index'])->name('cuti');
     Route::get('pegawai/index', [PegawaiController::class, 'index'])->name('pegawai');
     Route::get('pegawai/trash', [PegawaiController::class, 'index'])->name('trashed');
     Route::post('pegawai/restore', [PegawaiController::class, 'restore']);

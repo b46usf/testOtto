@@ -17,10 +17,10 @@ class PegawaiController extends Controller
         $currentURL = $request->segment(count(request()->segments()));
         // mengambil data pegawai dengan eloquent ORM
         if ($currentURL=='trash') {
-            $pegawai    = Pegawai::with('Cuti')->onlyTrashed()->orderBy('tanggal_gabung')->get();
+            $pegawai    = Pegawai::onlyTrashed()->orderBy('tanggal_gabung')->get();
             $laman      = 'pages/trashedPegawai';
         } else {
-            $pegawai    = Pegawai::with('Cuti')->orderBy('tanggal_gabung')->get();
+            $pegawai    = Pegawai::orderBy('tanggal_gabung')->get();
             $laman      = 'pages/indexPegawai';
         }
         // mengubah ke array
