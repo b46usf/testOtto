@@ -103,12 +103,19 @@ function trashed(dataParam, action, text) {
 }
 
 $(document).ready(function () {
-    var getUrl = window.location;
-    var urLoc = getUrl.pathname.split("/")[3];
-    if (urLoc == "edit") {
+    if (window.location.pathname.split("/")[3] == "edit") {
         $("form input").prop("disabled", true);
         $(".btn-save").addClass("btn-edit");
         $(".btn-save").text("Edit");
+    }
+    $("#" + window.location.pathname.split("/")[2]).addClass("active");
+    if (window.location.pathname.split("/")[2] == "total") {
+        $("#param1").html("Total Cuti");
+        $("#param2").html("Total Hari");
+    }
+    if (window.location.pathname.split("/")[2] == "sisa") {
+        $("#param1").html("Total Cuti/Hari");
+        $("#param2").html("Sisa Cuti/Hari");
     }
 });
 

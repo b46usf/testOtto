@@ -26,6 +26,8 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('regis
 Route::post('register', [AuthController::class, 'register']);
 Route::group(['middleware' => 'auth'], function () {
     Route::get('cuti/index', [CutiController::class, 'index'])->name('cuti');
+    Route::get('cuti/total', [CutiController::class, 'total'])->name('total');
+    Route::get('cuti/sisa', [CutiController::class, 'sisa'])->name('sisa');
     Route::get('pegawai/index', [PegawaiController::class, 'index'])->name('pegawai');
     Route::get('pegawai/trash', [PegawaiController::class, 'index'])->name('trashed');
     Route::post('pegawai/restore', [PegawaiController::class, 'restore']);
