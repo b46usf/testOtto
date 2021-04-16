@@ -17,10 +17,10 @@ class PegawaiController extends Controller
         $currentURL = $request->segment(count(request()->segments()));
         // mengambil data pegawai dengan eloquent ORM
         if ($currentURL=='trash') {
-            $pegawai    = Pegawai::with('Cuti')->onlyTrashed()->get();
+            $pegawai    = Pegawai::with('Cuti')->onlyTrashed()->orderBy('tanggal_gabung')->get();
             $laman      = 'pages/trashedPegawai';
         } else {
-            $pegawai    = Pegawai::with('Cuti')->get();
+            $pegawai    = Pegawai::with('Cuti')->orderBy('tanggal_gabung')->get();
             $laman      = 'pages/indexPegawai';
         }
         // mengubah ke array
@@ -121,21 +121,21 @@ class PegawaiController extends Controller
 
     public function destroy(Request $request) {
         // eloquent ORM delete data
-        $delPegawai    =   Pegawai::where('nomor_induk',$request->noInduk)->delete();
+        $delPegawai    =   Pegawai::where('nomor_induk',$request->dataID)->delete();
         $response       =   array('status' => 200,'message' => 'Delete Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);        
     }
 
     public function restore(Request $request) {
         // eloquent ORM restore data
-        $restorePegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->noInduk)->restore();
+        $restorePegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->dataID)->restore();
         $response       =   array('status' => 200,'message' => 'Restore Success.','success' => 'OK','location' => '/pegawai/index');
         echo json_encode($response);        
     }    
     
     public function truedelete(Request $request) {
         // eloquent ORM delete permanent data
-        $delPegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->noInduk)->forceDelete();
+        $delPegawai =   Pegawai::withTrashed()->where('nomor_induk',$request->dataID)->forceDelete();
         $response   =   array('status' => 200,'message' => 'Delete Permanent Success.','success' => 'OK','location' => '/pegawai/trash');
         echo json_encode($response);        
     }

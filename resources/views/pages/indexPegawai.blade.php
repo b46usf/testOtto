@@ -7,10 +7,10 @@
         <h3>Data Pegawai</h3>
       </div>
       <div class="card-body">
-      <a href="#" data-action="/home"><< Back</a> || <a href="#" data-action="create">Add</a> || <a href="#" data-action="/Pegawai/trash">Trashed</a>
+      <a href="#" data-action="/home"><< Back</a> || <a href="#" data-action="create">Add</a> || <a href="#" data-action="/pegawai/trash">Trashed</a>
         <div class="table-responsive">
           <table style="width: 100%;" id="tabPegawai" data-action="/pegawai/table" class="table table-md table-hover table-striped table-bordered">
-            <thead><tr>
+            <thead class="text-center"><tr>
                 <th scope="col">No</th>
                 <th scope="col">Nomor Induk</th>
                 <th scope="col">Nama</th>

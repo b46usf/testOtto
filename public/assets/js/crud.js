@@ -59,7 +59,7 @@ $(document).on("click", ".btn-delete", function (event) {
 });
 
 function deldata(dataParam, action) {
-    if (confirm("Data Akan Dihapus")) {
+    if (confirm("Data Pegawai " + dataParam + " Akan Dihapus")) {
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -81,7 +81,7 @@ function deldata(dataParam, action) {
 }
 
 function trashed(dataParam, action, text) {
-    if (confirm("Data Will Be " + text)) {
+    if (confirm("Data Pegawai " + dataParam + " Will Be " + text)) {
         $.ajax({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
