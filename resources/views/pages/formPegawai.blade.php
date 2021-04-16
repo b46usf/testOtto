@@ -4,7 +4,7 @@
 <!--Tanpa Jquery-->
 @php dd(gettype($pegawai[0]));
 if (count($pegawai) > 0 ) {
-  if (gettype($pegawai[0])=='object') {
+  if (isset($pegawai[0])){
     foreach($pegawai as $k) {
       $valID      = $k->nomor_induk;
       $valname    = $k->nama;
